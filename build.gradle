@@ -6,7 +6,9 @@ plugins {
 }
 
 group 'com.mohn93'
-version '2020.10'
+version '2020.1.2'
+sourceCompatibility = 1.8
+
 
 repositories {
     mavenCentral()
@@ -19,15 +21,15 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2019.2.3'
-    plugins += 'Dart:192.5728.98'
+    version '2020.1'
+    plugins += 'Dart:201.6668.121'
+//    plugins += 'Dart:193'
 
 }
 patchPluginXml {
-//    changeNotes """
-//      Add change notes here.<br>
-//      <em>most HTML tags may be used</em>
-//      """
+    changeNotes """
+      Add null safety support.<br>
+      """
 }
 
 publishPlugin {

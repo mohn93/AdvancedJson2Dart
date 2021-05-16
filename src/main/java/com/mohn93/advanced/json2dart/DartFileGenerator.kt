@@ -8,25 +8,37 @@ import com.intellij.psi.PsiFileFactory
 import com.mohn93.advanced.json2dart.utils.DartClassUtils
 import com.jetbrains.lang.dart.DartFileType
 
-class DartFileGenerator(private val project: Project, private val directory: PsiDirectory, private val fileName: String) {
+class DartFileGenerator(
+    private val project: Project,
+    private val directory: PsiDirectory,
+    private val fileName: String
+) {
 
-    fun generateDarFile( classCodeContent: String) {
+    fun generateDarFile(classCodeContent: String) {
         val psiFileFactory = PsiFileFactory.getInstance(project)
         CommandProcessor.getInstance().executeCommand(directory.project, {
             ApplicationManager.getApplication().runWriteAction {
                 val file =
-                        psiFileFactory.createFileFromText("$fileName.dart", DartFileType.INSTANCE, classCodeContent)
+                    psiFileFactory.createFileFromText("$fileName.dart", DartFileType.INSTANCE, classCodeContent)
                 directory.add(file)
             }
         }, "JSON to Dart Class", "JSON to Dart Class")
     }
 
-    fun class2Code(dartClass: CustomClassType): String {
+    fun generateCode(dartClass: CustomClassType): String {
+        val sb = StringBuilder()
+
+        sb.append(class2Code(dartClass));
+
+        return DartClassUtils.insertClassHead(fileName, sb.toString())
+    }
+
+    private fun class2Code(dartClass: CustomClassType): String {
         val needGenerateCode = mutableListOf<CustomClassType>()
 
         val sb = StringBuilder()
-        sb.append(DartClassUtils.dartClassStartStr(dartClass.typeName,dartClass.classOptions))
-        sb.append(DartClassUtils.fieldsStr(dartClass.fieldList, dartClass.classOptions.isFinal))
+        sb.append(DartClassUtils.dartClassStartStr(dartClass.typeName, dartClass.classOptions))
+        sb.append(DartClassUtils.fieldsStr(dartClass.fieldList, dartClass.classOptions))
         sb.append("\n")
         sb.append(DartClassUtils.constructorStr(dartClass))
         sb.append("\n")
@@ -46,9 +58,7 @@ class DartFileGenerator(private val project: Project, private val directory: Psi
             sb.append(class2Code(it))
         }
 
-
-
-        return DartClassUtils.insertClassHead(fileName, sb.toString())
+        return sb.toString();
     }
 
 }

@@ -12,6 +12,7 @@ class StorageRepo {
                 withEquality = getBoolean("withEquality"),
                 jsNullable = getBoolean("jsNullable"),
                 jsIgnoreUnannotated = getBoolean("jsIgnoreUnannotated"),
+                nullSafety = getBoolean("nullSafety"),
             )
         }
 
@@ -21,6 +22,7 @@ class StorageRepo {
             setBoolean("withEquality", options.withEquality);
             setBoolean("jsNullable", options.jsNullable);
             setBoolean("jsIgnoreUnannotated", options.jsIgnoreUnannotated);
+            setBoolean("nullSafety", options.nullSafety);
 
         }
 

@@ -33,14 +33,14 @@ object DartClassUtils {
         return sb.toString()
     }
 
-    fun fieldsStr(fields: List<TypeDefinition>, isFinal: Boolean): String {
+    fun fieldsStr(fields: List<TypeDefinition>, classOptions: ClassOptions): String {
         val sb = StringBuilder()
         fields.forEach {
-            sb.append("  @JsonKey(name: \"${it.name}\")")
+            sb.append("  @JsonKey(name: '${it.name}')")
             sb.append("\n")
-            if (isFinal)
+            if (classOptions.isFinal)
                 sb.append("  final")
-            sb.append("  ${it.typeName} ${it.name.snakeCaseToPascalCase()};")
+            sb.append("  ${it.typeName}${if (classOptions.jsNullable && classOptions.nullSafety) "?" else ""} ${it.name.snakeCaseToPascalCase()};")
             sb.append("\n")
         }
         return sb.toString()
@@ -48,6 +48,33 @@ object DartClassUtils {
 
 
     fun constructorStr(dartClass: CustomClassType): String {
+        val sb = StringBuilder()
+        sb.append("  ${dartClass.typeName}(")
+
+        val constructorStr = StringBuilder()
+        if (dartClass.fieldList.isNotEmpty()) {
+            constructorStr.append("{")
+            dartClass.fieldList.forEach {
+
+                if (dartClass.classOptions.nullSafety && !dartClass.classOptions.jsNullable ) {
+                    constructorStr.append("required ")
+                }
+
+                constructorStr.append("this.${it.name.snakeCaseToPascalCase()}")
+                constructorStr.append(", ")
+            }
+            constructorStr.setLength(constructorStr.length - 2)
+            constructorStr.append("}")
+        }
+        sb.append(constructorStr)
+        sb.append(")")
+        sb.append(";")
+        sb.append("\n")
+        return sb.toString()
+    }
+
+
+    fun copyWith(dartClass: CustomClassType): String {
         val sb = StringBuilder()
         sb.append("  ${dartClass.typeName}(")
 

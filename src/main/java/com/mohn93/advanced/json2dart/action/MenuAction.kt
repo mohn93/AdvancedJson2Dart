@@ -50,8 +50,12 @@ class Json2DartAction : AnAction() {
             val classOptions = ClassOptions(
                 isFinal = it.isFinal,
                 jsNullable = it.nullable,
-                jsIgnoreUnannotated = it.ignoreUnannotated
+                jsIgnoreUnannotated = it.ignoreUnannotated,
+                withEquality = it.withEquality,
+                withCopy = it.withCopy,
+                nullSafety = it.nullSafety
             )
+
             StorageRepo.saveOptions(options = classOptions)
             val dartClassDefinition = map2CustomClassDefinition(
                 fileName,
@@ -60,7 +64,7 @@ class Json2DartAction : AnAction() {
             )
 
             val generator = DartFileGenerator(project, directory,fileName)
-            val codeContent = generator.class2Code(dartClassDefinition)
+            val codeContent = generator.generateCode(dartClassDefinition)
             generator.generateDarFile(codeContent)
 
         }.show()

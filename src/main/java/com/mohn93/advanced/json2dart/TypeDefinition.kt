@@ -29,7 +29,9 @@ class ListClassType(name: String, val genericsType: TypeDefinition
         TypeDefinition(name, "List<${genericsType.typeName}>")
 
 class ClassOptions(var isFinal: Boolean = false,
+                   var jsNullable: Boolean = false,
+                   var jsIgnoreUnannotated: Boolean = false,
                    var withCopy: Boolean = false,
                    var withEquality: Boolean = false,
-                   var jsNullable: Boolean = false,
-                   var jsIgnoreUnannotated: Boolean = false)
+                   var nullSafety: Boolean = false,
+)

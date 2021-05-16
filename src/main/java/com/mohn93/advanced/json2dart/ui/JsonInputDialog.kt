@@ -120,6 +120,7 @@ open class JsonInputDialog(
             print("$project")
             val dialog = AdvancedOptionsDialog(project, this.classOption, true) {
                 classOption = it
+                StorageRepo.saveOptions(it);
             }
             dialog.show()
         })
@@ -184,7 +185,10 @@ open class JsonInputDialog(
             classNameInput.text, myField.text,
             classOption.isFinal,
             classOption.jsNullable,
-            classOption.jsIgnoreUnannotated
+            classOption.jsIgnoreUnannotated,
+            classOption.withCopy,
+            classOption.withEquality,
+            classOption.nullSafety
         )
 
         if (collectInfo.inputClassName.isEmpty()) {
