@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.mohn93'
-version '2020.1.2'
+version '2020.1.4'
 sourceCompatibility = 1.8
 
 
@@ -27,6 +27,8 @@ intellij {
 
 }
 patchPluginXml {
+    sinceBuild '200.*'
+    untilBuild '211.*'
     changeNotes """
       Add null safety support.<br>
       """

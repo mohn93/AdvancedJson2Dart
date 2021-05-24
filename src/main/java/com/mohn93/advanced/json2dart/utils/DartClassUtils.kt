@@ -26,7 +26,7 @@ object DartClassUtils {
 
     fun dartClassStartStr(className: String, classOptions: ClassOptions): String {
         val sb = StringBuilder()
-        sb.append("@JsonSerializable(nullable: ${classOptions.jsNullable},ignoreUnannotated: ${classOptions.jsIgnoreUnannotated})")
+        sb.append("@JsonSerializable(${if (!classOptions.nullSafety) "nullable: ${classOptions.jsNullable}, " else ""}ignoreUnannotated: ${classOptions.jsIgnoreUnannotated})")
         sb.append("\n")
         sb.append("class $className {")
         sb.append("\n")
@@ -56,7 +56,7 @@ object DartClassUtils {
             constructorStr.append("{")
             dartClass.fieldList.forEach {
 
-                if (dartClass.classOptions.nullSafety && !dartClass.classOptions.jsNullable ) {
+                if (dartClass.classOptions.nullSafety && !dartClass.classOptions.jsNullable) {
                     constructorStr.append("required ")
                 }
 
