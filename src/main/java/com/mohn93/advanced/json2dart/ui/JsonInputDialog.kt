@@ -46,15 +46,15 @@ val myInputValidator = MyInputValidator()
  * Json input Dialog
  */
 open class JsonInputDialog(
-    val project: Project?,
-    val doOKAction: (info: CollectInfo) -> Unit
+        val project: Project?,
+        val doOKAction: (info: CollectInfo) -> Unit
 ) : Messages.InputDialog(
-    project,
-    "Please input the class name and JSON String for generating dart bean class",
-    "Make Dart bean Class Code",
-    Messages.getInformationIcon(),
-    "",
-    myInputValidator
+        project,
+        "Please input the class name and JSON String for generating dart bean class",
+        "Make Dart bean Class Code",
+        Messages.getInformationIcon(),
+        "",
+        myInputValidator
 ) {
 
     private lateinit var classNameInput: JTextField
@@ -182,13 +182,8 @@ open class JsonInputDialog(
 
     override fun doOKAction() {
         val collectInfo = CollectInfo(
-            classNameInput.text, myField.text,
-            classOption.isFinal,
-            classOption.jsNullable,
-            classOption.jsIgnoreUnannotated,
-            classOption.withCopy,
-            classOption.withEquality,
-            classOption.nullSafety
+                classNameInput.text, myField.text,
+                classOption
         )
 
         if (collectInfo.inputClassName.isEmpty()) {

@@ -5,7 +5,6 @@ import com.intellij.openapi.command.CommandProcessor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFileFactory
-import com.mohn93.advanced.json2dart.utils.DartClassUtils
 import com.jetbrains.lang.dart.DartFileType
 
 class DartFileGenerator(
@@ -25,40 +24,5 @@ class DartFileGenerator(
         }, "JSON to Dart Class", "JSON to Dart Class")
     }
 
-    fun generateCode(dartClass: CustomClassType): String {
-        val sb = StringBuilder()
-
-        sb.append(class2Code(dartClass));
-
-        return DartClassUtils.insertClassHead(fileName, sb.toString())
-    }
-
-    private fun class2Code(dartClass: CustomClassType): String {
-        val needGenerateCode = mutableListOf<CustomClassType>()
-
-        val sb = StringBuilder()
-        sb.append(DartClassUtils.dartClassStartStr(dartClass.typeName, dartClass.classOptions))
-        sb.append(DartClassUtils.fieldsStr(dartClass.fieldList, dartClass.classOptions))
-        sb.append("\n")
-        sb.append(DartClassUtils.constructorStr(dartClass))
-        sb.append("\n")
-        sb.append(DartClassUtils.factoryConstructorStr(dartClass.typeName))
-        sb.append("\n")
-        sb.append(DartClassUtils.toJsonStr(dartClass.typeName))
-        sb.append(DartClassUtils.dartClassEndStr())
-        sb.append("\n")
-        dartClass.fieldList.forEach {
-            if (it is CustomClassType) {
-                needGenerateCode.add(it)
-            } else if (it is ListClassType && it.genericsType is CustomClassType) {
-                needGenerateCode.add(it.genericsType)
-            }
-        }
-        needGenerateCode.forEach {
-            sb.append(class2Code(it))
-        }
-
-        return sb.toString();
-    }
 
 }

@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.mohn93'
-version '2020.1.4'
+version '2020.1.5'
 sourceCompatibility = 1.8
 
 
