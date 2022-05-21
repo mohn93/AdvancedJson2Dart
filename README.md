@@ -1,5 +1,5 @@
 # AdvancedJson2Dart
-
+<!-- Plugin description -->
 <h3>A plugin that can convert json into a dart file that confirms to the json_serializable rule</h3>
 <p>To try the Plugin: <a href="https://plugins.jetbrains.com/plugin/16236-advancedjson2dart/versions/stable/112576">AdvancedJson2Dart</a></p><br>
 
@@ -11,3 +11,4 @@
 <p><code> flutter packages pub run build_runner build --delete-conflicting-outputs</code></p>
   
 </ol>
+<!-- Plugin description end -->

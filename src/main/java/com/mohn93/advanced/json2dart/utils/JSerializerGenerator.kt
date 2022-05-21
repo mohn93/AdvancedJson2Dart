@@ -5,7 +5,7 @@ import com.mohn93.advanced.json2dart.ClassOptions
 class JSerializerGenerator(classOptions: ClassOptions, fileName: String) : DartClassGenerator(classOptions, fileName) {
 
     override fun importString(): String {
-        return """import 'package:json_annotation/json_annotation.dart'; """
+        return """import 'package:jserializer/jserializer.dart'; """
     }
 
     override fun classHead(fileName: String): String {
@@ -22,10 +22,6 @@ class JSerializerGenerator(classOptions: ClassOptions, fileName: String) : DartC
 
     override fun afterFieldsString(className: String): String {
         return  ""
-    }
-
-    private fun partStr(fileName: String): String {
-        return "part '$fileName.g.dart'; "
     }
 
 }
