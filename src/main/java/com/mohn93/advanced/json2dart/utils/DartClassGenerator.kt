@@ -40,6 +40,7 @@ abstract class DartClassGenerator(private val classOptions: ClassOptions, privat
     private fun fieldsStr(fields: List<TypeDefinition>): String {
         val sb = StringBuilder()
         fields.forEach {
+            if (!classOptions.constructorAnnotation)
             sb.append("  ${fieldAnnotation(it.name)}")
             sb.append("\n")
             if (classOptions.isFinal)
@@ -59,6 +60,8 @@ abstract class DartClassGenerator(private val classOptions: ClassOptions, privat
         if (dartClass.fieldList.isNotEmpty()) {
             constructorStr.append("{")
             dartClass.fieldList.forEach {
+                if (dartClass.classOptions.constructorAnnotation)
+                    constructorStr.append("${fieldAnnotation(it.name)} ")
 
                 if (dartClass.classOptions.nullSafety && !dartClass.classOptions.jsNullable) {
                     constructorStr.append("required ")
@@ -89,6 +92,7 @@ abstract class DartClassGenerator(private val classOptions: ClassOptions, privat
         sb.append(dartClassStartStr(dartClass.typeName))
         sb.append(fieldsStr(dartClass.fieldList))
         sb.append("\n")
+
         sb.append(constructorStr(dartClass))
         sb.append("\n")
         sb.append(afterFieldsString(dartClass.typeName))

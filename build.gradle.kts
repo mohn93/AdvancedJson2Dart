@@ -8,7 +8,7 @@ plugins {
     // Java support
     id("java")
     // Kotlin support
-    id("org.jetbrains.kotlin.jvm") version "1.6.10"
+    kotlin("jvm") version "1.7.20"
     // Gradle IntelliJ Plugin
     id("org.jetbrains.intellij") version "1.4.0"
     // Gradle Changelog Plugin
@@ -30,14 +30,6 @@ repositories {
     mavenCentral()
 }
 
-//dependencies {
-//
-//    testImplementation 'junit:junit:4.13'
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21-2"
-//    compileOnly 'org.jetbrains:annotations:23.0.0'
-//
-//    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:..."
-//}
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 
@@ -123,21 +115,14 @@ tasks {
         channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
     }
 }
-
-//intellij {
-//    version '2020.1'
-////    plugins += 'Dart:201.6668.121'
-////    plugins += 'Dart:193'
-//
-//}
-//patchPluginXml {
-//    sinceBuild '200.*'
-//    untilBuild '213.*'
-//    changeNotes """
-//      Support Intellij build 213.<br>
-//      """
-//}
-
-//publishPlugin {
-//    token = 'perm:bW9objkz.OTItMzQwNw==.zPl6qFiFV1khtBhLltDuGxFiiKUFw7'//System.getenv("ORG_GRADLE_PROJECT_intellijPublishToken")
-//}
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20")
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}

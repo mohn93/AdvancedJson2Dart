@@ -7,7 +7,6 @@ import com.intellij.ui.TabbedPaneImpl
 import com.intellij.util.ui.JBEmptyBorder
 import com.mohn93.advanced.json2dart.AnnotationOption
 import java.awt.BorderLayout
-import java.awt.Checkbox
 import javax.swing.*
 
 /**
@@ -26,9 +25,12 @@ open class AdvancedOptionsDialog(
     private lateinit var withCopyCheckBox: JCheckBox
     private lateinit var withEqualityCheckBox: JCheckBox
     private lateinit var nullSafetyCheckBox: JCheckBox
+    private lateinit var constructorAnnotationRadioButton: JRadioButton
+    private lateinit var memberAnnotationRadioButton: JRadioButton
     private lateinit var jSerializerRadioButton: JRadioButton
     private lateinit var jsonSerializerRadioButton: JRadioButton
     private lateinit var radioGroup: ButtonGroup
+    private lateinit var radioGroup2: ButtonGroup
 
     init {
         init()
@@ -45,6 +47,10 @@ open class AdvancedOptionsDialog(
         nullSafetyCheckBox.isSelected = classOptions.nullSafety
         jsonSerializerRadioButton.isSelected = classOptions.annotationOption == AnnotationOption.JsonSerializer
         jSerializerRadioButton.isSelected = classOptions.annotationOption == AnnotationOption.JSerializer
+        constructorAnnotationRadioButton.isSelected = classOptions.constructorAnnotation
+        memberAnnotationRadioButton.isSelected = !classOptions.constructorAnnotation
+
+
     }
 
     override fun createCenterPanel(): JComponent? {
@@ -61,6 +67,9 @@ open class AdvancedOptionsDialog(
 
         jSerializerRadioButton = createRadioButton("JSerializer");
         jsonSerializerRadioButton = createRadioButton("JsonSerializer");
+        constructorAnnotationRadioButton = createRadioButton("At Constructor");
+        memberAnnotationRadioButton = createRadioButton("At Members");
+
         radioGroup = ButtonGroup();
 
         radioGroup.add(jsonSerializerRadioButton);
@@ -84,6 +93,14 @@ open class AdvancedOptionsDialog(
         annotationPanel.add(jsonSerializerRadioButton);
         annotationPanel.add(jSerializerRadioButton);
 
+        radioGroup2 = ButtonGroup();
+
+        radioGroup2.add(constructorAnnotationRadioButton);
+        radioGroup2.add(memberAnnotationRadioButton)
+        val annotationPlacementPanel = createPanel();
+        annotationPlacementPanel.add(constructorAnnotationRadioButton);
+        annotationPlacementPanel.add(memberAnnotationRadioButton);
+
 
         taps.border = JBEmptyBorder(16, 16, 5, 16)
         taps.addTab("Property", propertyContainer)
@@ -91,6 +108,8 @@ open class AdvancedOptionsDialog(
         taps.addTab("Options", optionsPanel)
 
         taps.addTab("Annotation", annotationPanel)
+
+        taps.addTab("Annotation Placement", annotationPlacementPanel)
 
         messagePanel.add(taps, BorderLayout.SOUTH)
         setViewValues()
@@ -130,6 +149,7 @@ open class AdvancedOptionsDialog(
                         withCopy = withCopyCheckBox.isSelected,
                         withEquality = withEqualityCheckBox.isSelected,
                         nullSafety = nullSafetyCheckBox.isSelected,
+                        constructorAnnotation = constructorAnnotationRadioButton.isSelected,
                         annotationOption = if (jsonSerializerRadioButton.isSelected) AnnotationOption.JsonSerializer else AnnotationOption.JSerializer,
                 )
         )

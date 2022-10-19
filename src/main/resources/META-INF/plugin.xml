@@ -6,7 +6,7 @@
       <description><![CDATA[
     <h3>A plugin that can convert json into a dart file that confirms to the json_serializable rule</h3>
     <ol>
-    <li>Dependency <a href="https://pub.dev/packages/json_serializable">json_serializable</a></li><br>
+    <li>Dependency <a href="https://pub.dev/packages/json_serializable">json_serializable</a></li> or <a href="https://github.com/erabti/jserializer_library">jserializer_library</a></li><br>
     <li>Generate dart file</li><br>
     <p><img src="https://i.ibb.co/tqWYP8P/Screen-Shot-2021-04-08-at-1-35-15-PM.png"></p><br>
     <li>Using built-in commands</li><br>

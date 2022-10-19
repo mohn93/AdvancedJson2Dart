@@ -2,6 +2,12 @@
 # Advanced Json To Dart Changelog
 
 
+
+## [2022.0.0]
+### Added
+- Add `Annotations placement` option
+
+
 ## [2020.1.6]
 ### Fixed
 - Update `platformVersion` to `2021.2.1` for compatibility with Apple M1

@@ -14,6 +14,7 @@ class StorageRepo {
                     jsNullable = getBoolean("jsNullable"),
                     jsIgnoreUnannotated = getBoolean("jsIgnoreUnannotated"),
                     nullSafety = getBoolean("nullSafety"),
+                    constructorAnnotation = getBoolean("constructorAnnotation"),
                     annotationOption = AnnotationOption.valueOf(getString("annotation",AnnotationOption.JsonSerializer.toString())),
             )
         }
@@ -25,6 +26,7 @@ class StorageRepo {
             setBoolean("jsNullable", options.jsNullable);
             setBoolean("jsIgnoreUnannotated", options.jsIgnoreUnannotated);
             setBoolean("nullSafety", options.nullSafety);
+            setBoolean("constructorAnnotation", options.constructorAnnotation);
             setString("annotation", options.annotationOption.toString());
         }
 

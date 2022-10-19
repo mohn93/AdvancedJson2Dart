@@ -39,5 +39,6 @@ class ClassOptions(
         var withCopy: Boolean = false,
         var withEquality: Boolean = false,
         var nullSafety: Boolean = false,
+        var constructorAnnotation: Boolean = false,
         var annotationOption: AnnotationOption = AnnotationOption.JsonSerializer,
 )
